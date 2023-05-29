@@ -8,7 +8,7 @@ public class Endereco {
     private int numero_casa;
     private long cep;
 
-    public void endereço (String rua, String complemento, String cidade, int numero_casa, long cep){
+    public void endereco (String rua, String complemento, String cidade, int numero_casa, long cep){
         this.rua = rua;
         this.complemento = complemento;
         this.cidade = cidade;

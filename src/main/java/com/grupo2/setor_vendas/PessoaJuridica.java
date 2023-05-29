@@ -1,19 +1,25 @@
+package com.grupo2.setor_vendas;
+
 public class PessoaJuridica {
-    private String razaosocial;
+
+    private String razaoSocial;
     private int CNPJ;
-    private int inscricaoestadual;
+    private int inscricaoEstadual;
     private String nomefantasia;
-    public pessoajuridica(int CNPJ, int inscricaoestadual, String nomefantasia, String razaosocial){
+    
+    public void pessoajuridica (int CNPJ, int inscricaoestadual, String nomefantasia, String razaosocial){
+
         this.CNPJ = CNPJ;
-        this.inscricaoestadual = inscricaoestadual;
+        this.inscricaoEstadual = inscricaoestadual;
         this.nomefantasia = nomefantasia;
-        this.razaosocial = razaosocial;
+        this.razaoSocial = razaosocial;
     }
+
     public String getRazaosocial(){
-        return razaosocial;
+        return razaoSocial;
     }
     public int getInscricaoestadual(){
-        return inscricaoestadual;
+        return inscricaoEstadual;
     }
     public int getCNPJ(){
         return CNPJ;
