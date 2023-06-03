@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class TelaLoginController{
@@ -20,8 +19,12 @@ public class TelaLoginController{
     private TextField senhaField;
     @FXML
     private Label lblSenhaIncorreta;
-    @FXML
-    private VBox root;
+
+    private static Stage stageLogin;
+
+    public static void setStageLogin(Stage stage) {
+        stageLogin = stage;
+    }
     
     @FXML
     private void acaoEntrar() throws IOException {
@@ -31,12 +34,15 @@ public class TelaLoginController{
 
         if(user.equals("gerente") && senha.equals("gerente")){
             App.setRoot("telaGerente");
+            stageLogin.close();
 
         }else if (user.equals("estoque") && senha.equals("estoque")){
             App.setRoot("telaEstoque");
+            stageLogin.close();
 
         }else if(user.equals("vendedor") && senha.equals("vendedor")){
             App.setRoot("telaVenda1");
+            stageLogin.close();
 
         }else{
             senhaField.setText("");
@@ -50,10 +56,9 @@ public class TelaLoginController{
     @FXML
     private void acaoCancelar() throws IOException {
         
-        Stage stage = (Stage) userField.getScene().getWindow();
-        stage.close();
+        //Stage stage = (Stage) userField.getScene().getWindow();
+        stageLogin.close();
         Platform.exit();
-
     }
 
     @FXML
@@ -62,18 +67,19 @@ public class TelaLoginController{
         if (event.getCode() == KeyCode.ENTER) {
             acaoEntrar();
         } 
-
     }
 
-    /*@FXML
-    public void initialize() {
-        sceneLogin.setOnCloseRequest(event -> {
-            event.consume(); // Impede o fechamento padrão da janela
-            Platform.exit(); // Fecha a aplicação por completo
-        });
-    }*/
-    
 
+    @FXML
+    private void initialize() {
+        stageLogin.setOnCloseRequest(event -> fecharSistema());
+    }
+
+    private void fecharSistema() {
+        stageLogin.close();
+        Platform.exit();
+    }
+    
 
 
 }

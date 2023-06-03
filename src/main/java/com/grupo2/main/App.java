@@ -2,6 +2,9 @@ package com.grupo2.main;
 
 import java.io.IOException;
 
+
+import com.grupo2.telas_controller.TelaLoginController;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +16,6 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     private static Scene scene;
-    private static Stage stageLogin;
 
     @Override
     public void start(Stage stagePrincipal) throws IOException {
@@ -29,11 +31,13 @@ public class App extends Application {
         stagePrincipal.setMaximized(true);
         stagePrincipal.show();
 
-        stageLogin = new Stage();
+        Stage stageLogin = new Stage();
         stageLogin.setTitle("Sistema ERP");
         stageLogin.getIcons().add(new Image(iconPath));
         stageLogin.initModality(Modality.APPLICATION_MODAL);
         stageLogin.initOwner(stagePrincipal);
+        stageLogin.setResizable(false);
+        TelaLoginController.setStageLogin(stageLogin);
         Scene sceneLogin = new Scene(loadFXML("telaLogin"));
         stageLogin.setScene(sceneLogin);
         stageLogin.showAndWait();
@@ -43,7 +47,6 @@ public class App extends Application {
 
     static public void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
-        stageLogin.close();
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
@@ -58,3 +61,4 @@ public class App extends Application {
     }
 
 }
+
