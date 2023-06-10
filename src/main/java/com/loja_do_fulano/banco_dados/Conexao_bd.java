@@ -1,4 +1,4 @@
-package com.loja_do_fulano.conexao_bd;
+package com.loja_do_fulano.banco_dados;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,20 +6,19 @@ import java.sql.SQLException;
 
 public class Conexao_bd {
     
-  private Connection con = null;
+  private Connection conexao = null;
 
-  private String hostName = null;
-  private String userName = null;
-  private String password = null;
-  private String url = null;
-  private String jdbcDriver = null;
-  private String dataBaseName = null;
-  private String dataBasePrefix = null;
-  private String dabaBasePort = null;
+  private  String hostName = null;
+  private  String userName = null;
+  private  String password = null;
+  private  String url = null;
+  private  String jdbcDriver = null;
+  private  String dataBaseName = null;
+  private  String dataBasePrefix = null;
+  private  String dabaBasePort = null;
 
   public Conexao_bd() {
-    super();
-    
+  
     hostName = "localhost";
     userName = "root";
     password = "";
@@ -41,34 +40,36 @@ public class Conexao_bd {
   public Connection getConexao() {
 
     try {
-      if (con == null) {
+      if (conexao == null) {
         Class.forName(jdbcDriver);
-        con = DriverManager.getConnection(url, userName, password);
-      } else if (con.isClosed()) {
-        con = null;
+        conexao = DriverManager.getConnection(url, userName, password);
+      } else if (conexao.isClosed()) {
+        conexao = null;
         return getConexao();
       }
     } catch (ClassNotFoundException e) {
-
-      //use um sistema de log apropriado.
-  
+      //Fazer um log
+      System.out.println("////////// ERRO DE CONEXÃO /////////");
+      System.out.println(e);
       e.printStackTrace();
     } catch (SQLException e) {
-
-      //use um sistema de log apropriado.
-  
+      //fazer um log
+      System.out.println("////////// ERRO DE CONEXÃO /////////");
+      System.out.println(e);
       e.printStackTrace();
     }
 
-    return con;
+    return conexao;
   }
 
   public void closeConnection() {
-    if (con != null) {
+    if (conexao != null) {
       try {
-          con.close();
+        conexao.close();
       } catch (SQLException e) {
-          // use um sistema de log apropriado.
+          // fazer um log
+          System.out.println("////////// ERRO AO FECHAR A CONEXÃO /////////");
+          System.out.println(e);
           e.printStackTrace();
       }
     }

@@ -49,9 +49,9 @@
                   <Font name="Arial Black" size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="userField" layoutX="221.0" layoutY="132.0" text="vendedor" />
-            <PasswordField fx:id="senhaField" layoutX="221.0" layoutY="198.0" onKeyPressed="#acaoEntrer" text="vendedor" />
-            <Button layoutX="233.0" layoutY="249.0" mnemonicParsing="false" onAction="#acaoEntrar" prefHeight="45.0" prefWidth="126.0" text="Entrar" />
+            <TextField fx:id="txtUsuario" layoutX="221.0" layoutY="132.0" text="vendedor" />
+            <PasswordField fx:id="txtSenha" layoutX="221.0" layoutY="198.0" onKeyPressed="#acaoEntrer" text="vendedor" />
+            <Button fx:id="btnEntrar" layoutX="233.0" layoutY="249.0" mnemonicParsing="false" onAction="#acaoEntrar" prefHeight="45.0" prefWidth="126.0" text="Entrar" />
             <Button fx:id="btnCancelar" layoutX="250.0" layoutY="362.0" mnemonicParsing="false" onAction="#acaoCancelar" prefHeight="18.0" prefWidth="90.0" text="Cancelar" />
             <Label layoutX="221.0" layoutY="114.0" text="Usuario" />
             <Label layoutX="221.0" layoutY="179.0" text="Senha" />

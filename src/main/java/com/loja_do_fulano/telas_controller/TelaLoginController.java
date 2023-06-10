@@ -1,12 +1,18 @@
 package com.loja_do_fulano.telas_controller;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
+import com.loja_do_fulano.banco_dados.Conexao_bd;
 import com.loja_do_fulano.main.App;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -15,13 +21,21 @@ import javafx.stage.Stage;
 public class TelaLoginController{
 
     @FXML
-    private TextField userField;
+    private TextField txtUsuario;
     @FXML
-    private TextField senhaField;
+    private PasswordField txtSenha;
     @FXML
     private Label lblSenhaIncorreta;
     @FXML
     private Label lblStatusConexao;
+    @FXML
+    private Button btnEntrar;
+
+    private Conexao_bd conexao = new Conexao_bd();
+    private Connection con = null;
+    private PreparedStatement pst =null;
+    private ResultSet rs = null;
+
 
     private static Stage stageLogin;
 
@@ -32,25 +46,38 @@ public class TelaLoginController{
     @FXML
     private void acaoEntrar() throws IOException {
 
-        String user = userField.getText();
-        String senha = senhaField.getText();
+        String sql = "SELECT * FROM usuarios where usuario=? and senha=?";
 
-        if(user.equals("gerente") && senha.equals("gerente")){
-            App.setRoot("telaGerente");
-            stageLogin.close();
+        try {
+            
+            pst = con.prepareStatement(sql);
+            pst.setString(1,txtUsuario.getText());
+            //String senha = new String();
+            pst.setString(2, txtSenha.getText()); 
+            rs = pst.executeQuery();
 
-        }else if (user.equals("estoque") && senha.equals("estoque")){
-            App.setRoot("telaEstoque");
-            stageLogin.close();
+            if(rs.next()){
 
-        }else if(user.equals("vendedor") && senha.equals("vendedor")){
-            App.setRoot("telaVenda1");
-            stageLogin.close();
+                String cargo = rs.getString(3);
+                if(cargo.equals("gerente")){
+                    App.setRoot("telaGerente");
+                }else if(cargo.equals("vendedor")){
+                    App.setRoot("telaVenda1");
+                }else if(cargo.equals("estoque")){
+                    App.setRoot("telaEstoque");
+                }else{
+                    System.out.println("ERRO de comparação de cargo");
+                }
+                stageLogin.close();
 
-        }else{
-            senhaField.setText("");
-        }
-       
+            }else{
+                txtSenha.setText("");
+                lblSenhaIncorreta.setVisible(true);
+            }
+
+        } catch (Exception e) {
+            System.out.println("ERRO AO BUSCAR USUARIO EM BD: " + e);
+        }    
         
     }
 
@@ -76,11 +103,14 @@ public class TelaLoginController{
     private void initialize() {
         stageLogin.setOnCloseRequest(event -> fecharSistema());
         
-        if(App.statusConexao == true){
-            lblStatusConexao.setText("Você esta conectado!");
-            lblStatusConexao.setVisible(true);
-        }else{
+        con = conexao.getConexao();
+        
+        if(con == null){
             lblStatusConexao.setText("Erro de conexão!");
+            lblStatusConexao.setVisible(true);
+            btnEntrar.setVisible(false);
+        }else{
+            lblStatusConexao.setText("Você esta conectado!");
             lblStatusConexao.setVisible(true);
         }
         

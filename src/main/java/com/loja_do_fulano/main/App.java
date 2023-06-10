@@ -1,11 +1,6 @@
 package com.loja_do_fulano.main;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
-import com.loja_do_fulano.conexao_bd.Conexao_bd;
 import com.loja_do_fulano.telas_controller.TelaLoginController;
 
 import javafx.application.Application;
@@ -28,45 +23,11 @@ public class App extends Application {
         
         stagePrincipal.setTitle("Sistema ERP");
         String iconPath = App.class.getResource("/com/loja_do_fulano/imagens/icones/iconePequeno.png").toExternalForm();
-        //System.out.println("+++++++++++++++++++++++\n"+iconPath);
         stagePrincipal.getIcons().add(new Image(iconPath));
 
         stagePrincipal.setScene(scene);
         stagePrincipal.setMaximized(true);
         stagePrincipal.show();
-
-        // +++++++ TESTE BANCO DE DADOS 
-
-        Conexao_bd conexao = new Conexao_bd();
-        Connection con = conexao.getConexao();
-        if(con != null){
-            statusConexao = true;
-        }
-
-        /* 
-        System.out.println("\n\n ======= TESTE BANCO DE DADOS ========\n\n");
-        System.out.println(con);
-        
-        String sql = "SELECT * FROM usuarios";
-        PreparedStatement pstm = null;
-        ResultSet rset = null;
-        
-        try {
-
-            pstm = (PreparedStatement) con.prepareStatement(sql);
-            rset = pstm.executeQuery();
-
-            while(rset.next()){
-                System.out.print("Usuario: " + rset.getString("usuario"));
-                System.out.println("\tSenha: " + rset.getString("senha"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("\n======== TESTE BANCO DE DADOS =========\n\n");
-        */
-
 
         Stage stageLogin = new Stage();
         stageLogin.setTitle("Sistema ERP");
@@ -78,8 +39,6 @@ public class App extends Application {
         Scene sceneLogin = new Scene(loadFXML("telaLogin"));
         stageLogin.setScene(sceneLogin);
         stageLogin.showAndWait();
-
-        
 
     }
 
