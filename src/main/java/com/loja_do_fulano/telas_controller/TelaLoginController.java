@@ -62,6 +62,7 @@ public class TelaLoginController{
                 if(cargo.equals("gerente")){
                     App.setRoot("telaGerente");
                 }else if(cargo.equals("vendedor")){
+                    TelaVenda1Controller.setUsuarioLogado(rs.getString(4));
                     App.setRoot("telaVenda1");
                 }else if(cargo.equals("estoque")){
                     App.setRoot("telaEstoque");

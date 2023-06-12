@@ -29,6 +29,13 @@ public class App extends Application {
         stagePrincipal.setMaximized(true);
         stagePrincipal.show();
 
+        telaLogin(stagePrincipal);
+
+    }
+
+    static public void telaLogin(Stage stagePrincipal) throws IOException{
+        
+        String iconPath = App.class.getResource("/com/loja_do_fulano/imagens/icones/iconePequeno.png").toExternalForm();
         Stage stageLogin = new Stage();
         stageLogin.setTitle("Sistema ERP");
         stageLogin.getIcons().add(new Image(iconPath));
@@ -39,7 +46,7 @@ public class App extends Application {
         Scene sceneLogin = new Scene(loadFXML("telaLogin"));
         stageLogin.setScene(sceneLogin);
         stageLogin.showAndWait();
-
+        
     }
 
 
