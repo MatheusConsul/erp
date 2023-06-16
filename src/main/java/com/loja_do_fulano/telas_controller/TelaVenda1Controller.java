@@ -36,7 +36,7 @@ public class TelaVenda1Controller {
     private Label lblUsuarioLogado;
 
     @FXML
-    private TableColumn<Produto, String> tbColunaCodigo;
+    private TableColumn<Produto, Integer> tbColunaCodigo;
 
     @FXML
     private TableColumn<Produto, String> tbColunaDescricao;
@@ -55,24 +55,16 @@ public class TelaVenda1Controller {
 
 
     private List<Produto> listaProdutos = new ArrayList<>();
-    private ObservableList<Produto> observableListProdutos;
+    public ObservableList<Produto> observableListProdutos;
 
     @FXML
     private void pesquisarProduto() throws IOException { 
         
         System.out.println("\n\n\n PESUISANDO \n\n");
 
-        tbColunaCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
-        
-        tbColunaDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-        
-        tbColunaQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
+        Produto produto1 = new Produto(1234,"Notebook acer preto","20","2000,00");
 
-        tbColunaPreco.setCellValueFactory(new PropertyValueFactory<>("preco"));
-
-        Produto produto1 = new Produto("1233","Notebook acer preto","20","2000,00");
-
-        Produto produto2 = new Produto("1244","Geladeira Consul Branca","10","3000,00");
+        Produto produto2 = new Produto(12345,"Geladeira Consul Branca","10","3000,00");
         
         listaProdutos.add(produto1);
         listaProdutos.add(produto2);
@@ -80,7 +72,8 @@ public class TelaVenda1Controller {
         observableListProdutos = FXCollections.observableArrayList(listaProdutos);
 
         tbProdutos.setItems(observableListProdutos);
-        
+
+                
     }
 
     @FXML
@@ -90,10 +83,23 @@ public class TelaVenda1Controller {
         
     }
 
+
     @FXML
     private void initialize() throws IOException {
-        pesquisarProduto();
+        
         lblUsuarioLogado.setText("Bem vindo " + usuarioLogado);
+
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        tbColunaCodigo.setCellValueFactory(data -> data.getValue().codigoProperty().asObject());
+
+        tbColunaDescricao.setCellValueFactory(data -> data.getValue().descricaoProperty());
+        
+        tbColunaQuantidade.setCellValueFactory(data -> data.getValue().quantidadeProperty());
+        
+        tbColunaPreco.setCellValueFactory(data -> data.getValue().precoProperty()); 
+        
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     }
 
     public static void setUsuarioLogado(String usuario){
