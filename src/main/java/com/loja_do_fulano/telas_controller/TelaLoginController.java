@@ -1,11 +1,10 @@
 package com.loja_do_fulano.telas_controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.loja_do_fulano.banco_dados.Conexao_bd;
+import com.loja_do_fulano.banco_dados.ApiBD;
 import com.loja_do_fulano.main.App;
 
 import javafx.application.Platform;
@@ -31,12 +30,6 @@ public class TelaLoginController{
     @FXML
     private Button btnEntrar;
 
-    private Conexao_bd conexao = new Conexao_bd();
-    private Connection con = null;
-    private PreparedStatement pst =null;
-    private ResultSet rs = null;
-
-
     private static Stage stageLogin;
 
     public static void setStageLogin(Stage stage) {
@@ -46,48 +39,38 @@ public class TelaLoginController{
     @FXML
     private void acaoEntrar() throws IOException {
 
-        String sql = "SELECT * FROM usuarios where usuario=? and senha=?";
+        List<String> retornoConsulta = new ArrayList<>();
+        retornoConsulta = ApiBD.login(txtUsuario.getText(),txtSenha.getText());
+        
+        if(retornoConsulta != null){
 
-        try {
-            
-            pst = con.prepareStatement(sql);
-            pst.setString(1,txtUsuario.getText());
-            //String senha = new String();
-            pst.setString(2, txtSenha.getText()); 
-            rs = pst.executeQuery();
-
-            if(rs.next()){
-
-                String cargo = rs.getString(3);
-                if(cargo.equals("gerente")){
-                    App.setRoot("telaGerente");
-                }else if(cargo.equals("vendedor")){
-                    TelaVenda1Controller.setUsuarioLogado(rs.getString(4));
-                    App.setRoot("telaVenda1");
-                }else if(cargo.equals("estoque")){
-                    App.setRoot("telaEstoque");
-                }else{
-                    System.out.println("ERRO de comparação de cargo");
-                }
+            if(retornoConsulta.get(0).equals("gerente")){
+                App.setRoot("telaGerente");
                 stageLogin.close();
-
+            }else if(retornoConsulta.get(0).equals("vendedor")){
+                TelaVenda1Controller.setUsuarioLogado(retornoConsulta.get(1));
+                App.setRoot("telaVenda1");
+                stageLogin.close();
+            }else if(retornoConsulta.get(0).equals("estoque")){
+                App.setRoot("telaEstoque");
+                stageLogin.close();
             }else{
-                txtSenha.setText("");
-                lblSenhaIncorreta.setVisible(true);
+                for (String str : retornoConsulta) {
+                    System.out.println(str);
+                }
             }
 
-        } catch (Exception e) {
-            System.out.println("ERRO AO BUSCAR USUARIO EM BD: " + e);
-        }    
+        }else{
+            txtSenha.setText("");
+            lblSenhaIncorreta.setVisible(true);
+        }
+
         
     }
 
     @FXML
     private void acaoCancelar() throws IOException {
-        
-        //Stage stage = (Stage) userField.getScene().getWindow();
-        stageLogin.close();
-        Platform.exit();
+        fecharSistema();
     }
 
     @FXML
@@ -98,15 +81,12 @@ public class TelaLoginController{
         } 
     }
 
-
-
     @FXML
     private void initialize() {
         stageLogin.setOnCloseRequest(event -> fecharSistema());
-        
-        con = conexao.getConexao();
-        
-        if(con == null){
+
+        if(ApiBD.conectar_bd() == false){
+
             lblStatusConexao.setText("Erro de conexão!");
             lblStatusConexao.setVisible(true);
             btnEntrar.setVisible(false);
@@ -118,10 +98,9 @@ public class TelaLoginController{
     }
 
     private void fecharSistema() {
+        ApiBD.fecharConexao();
         stageLogin.close();
         Platform.exit();
     }
     
-
-
 }

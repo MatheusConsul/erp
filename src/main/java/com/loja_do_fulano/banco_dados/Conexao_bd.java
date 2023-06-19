@@ -17,7 +17,7 @@ public class Conexao_bd {
   private  String dataBasePrefix = null;
   private  String dabaBasePort = null;
 
-  public Conexao_bd() {
+  protected Conexao_bd() {
   
     hostName = "localhost";
     userName = "root";
@@ -37,7 +37,7 @@ public class Conexao_bd {
     
   }
       
-  public Connection getConexao() {
+  protected Connection getConexao() {
 
     try {
       if (conexao == null) {
@@ -62,7 +62,7 @@ public class Conexao_bd {
     return conexao;
   }
 
-  public void closeConnection() {
+  protected void closeConnection() {
     if (conexao != null) {
       try {
         conexao.close();
@@ -75,9 +75,7 @@ public class Conexao_bd {
     }
   }
     
-
-
-
+  
 
 }
 
