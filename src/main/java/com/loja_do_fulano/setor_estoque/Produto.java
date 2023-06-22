@@ -1,19 +1,21 @@
 package com.loja_do_fulano.setor_estoque;
 
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Produto {
+
     private final SimpleIntegerProperty codigo;
     private final SimpleStringProperty descricao;
-    private final SimpleStringProperty quantidade;
-    private final SimpleStringProperty preco;
+    private final SimpleIntegerProperty quantidade;
+    private final SimpleFloatProperty preco;
 
-    public Produto(int codigo, String descricao, String quantidade, String preco) {
+    public Produto(int codigo, String descricao, int quantidade, Float preco) {
         this.codigo = new SimpleIntegerProperty(codigo);
         this.descricao = new SimpleStringProperty(descricao);
-        this.quantidade = new SimpleStringProperty(quantidade);
-        this.preco = new SimpleStringProperty(preco);
+        this.quantidade = new SimpleIntegerProperty(quantidade);
+        this.preco = new SimpleFloatProperty(preco);
     }
 
     public int getCodigo() {
@@ -40,27 +42,27 @@ public class Produto {
         this.descricao.set(descricao);
     }
 
-    public String getQuantidade() {
+    public int getQuantidade() {
         return quantidade.get();
     }
 
-    public SimpleStringProperty quantidadeProperty() {
+    public SimpleIntegerProperty quantidadeProperty() {
         return quantidade;
     }
 
-    public void setQuantidade(String quantidade) {
+    public void setQuantidade(int quantidade) {
         this.quantidade.set(quantidade);
     }
 
-    public String getPreco() {
+    public Float getPreco() {
         return preco.get();
     }
 
-    public SimpleStringProperty precoProperty() {
+    public SimpleFloatProperty precoProperty() {
         return preco;
     }
 
-    public void setPreco(String preco) {
+    public void setPreco(Float preco) {
         this.preco.set(preco);
     }
 }
