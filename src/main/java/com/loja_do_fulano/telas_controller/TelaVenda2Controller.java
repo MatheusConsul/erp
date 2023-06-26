@@ -2,9 +2,11 @@ package com.loja_do_fulano.telas_controller;
 
 import java.io.IOException;
 
+import com.loja_do_fulano.banco_dados.ApiBD;
 import com.loja_do_fulano.main.App;
 import com.loja_do_fulano.setor_vendas.Carrinho;
 import com.loja_do_fulano.setor_vendas.Item;
+import com.loja_do_fulano.setor_vendas.PessoaFisica;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -208,7 +211,9 @@ public class TelaVenda2Controller {
 
     @FXML
     void acaoPesquisarCPFEnter(KeyEvent event) {
-        acaoPesquisarCPF(null);
+        if(event.getCode() == KeyCode.ENTER){
+            acaoPesquisarCPF(null);
+        }
     }
 
     @FXML
@@ -221,6 +226,9 @@ public class TelaVenda2Controller {
     @FXML
     void acaoSolicitarDesconto(ActionEvent event) {
 
+        Carrinho.setDesconto("25.00");
+        atualizarCarrinho();
+
     }
 
     @FXML
@@ -231,6 +239,38 @@ public class TelaVenda2Controller {
 
     @FXML
     void acaoPesquisarCPF(ActionEvent event) {
+        
+        String nome_cpf = txtCPFpesquisa.getText();
+        nome_cpf = nome_cpf.trim();
+
+        if(nome_cpf.isEmpty()){
+            System.out.println("Campo de pesquisa está vazio!!");
+        }else{
+            System.out.println("Nome ou cpf pesquisa: " + nome_cpf);
+            PessoaFisica cliente = ApiBD.pesquisarClietne(nome_cpf);
+            
+            if(cliente != null){
+                
+                txtCPFpesquisa.setText("");
+                txtNome.setText(cliente.getNome());
+                txtCPF.setText(Long.toString(cliente.getCPF()));
+                txtDataNascimento.setText(cliente.getData_Nascimento());
+                txtRua.setText(cliente.getRua());
+                txtBairro.setText(cliente.getBairro());
+                txtNumCasa.setText(Integer.toString(cliente.getNumCasa()));
+                txtCEP.setText(cliente.getCep());
+                txtCidade.setText(cliente.getCidade());
+                txtEstado.setText(cliente.getEstado());
+                txtTelefone.setText(Integer.toString(cliente.getTelefone()));
+                txtEmail.setText(cliente.getEmail());
+                
+                bloquearEdicaoDados();
+
+            }else{
+                txtCPFpesquisa.setText("Nenhum resultado encontrado!");
+            }
+        }
+        
 
     }
 
@@ -244,7 +284,25 @@ public class TelaVenda2Controller {
 
         tbCarrinho.setItems(observableListCarrinho);
         
-        lblSubTotal.setText(Carrinho.getValorTotalCarrinho());
+        lblSubTotal.setText(Carrinho.getSubTotalCarrinho());
+        lblDesconto.setText(Carrinho.getValorDesconto());
+        lblValorTotal.setText(Carrinho.getValorTotalCarrinho());
+
+    }
+
+    private void bloquearEdicaoDados(){
+        
+        txtNome.setEditable(false);
+        txtCPF.setEditable(false);
+        txtDataNascimento.setEditable(false);
+        txtRua.setEditable(false);
+        txtBairro.setEditable(false);
+        txtNumCasa.setEditable(false);
+        txtCEP.setEditable(false);
+        txtCidade.setEditable(false);
+        txtEstado.setEditable(false);
+        txtTelefone.setEditable(false);
+        txtEmail.setEditable(false);
 
     }
 
@@ -259,18 +317,8 @@ public class TelaVenda2Controller {
 
         tbColunaQuantidadeCarrinho.setCellValueFactory(data -> data.getValue().getQtdDoItemProperty().asObject());
 
-        txtNome.setEditable(false);
-        txtCPF.setEditable(false);
-        txtDataNascimento.setEditable(false);
-        txtRua.setEditable(false);
-        txtBairro.setEditable(false);
-        txtNumCasa.setEditable(false);
-        txtCEP.setEditable(false);
-        txtCidade.setEditable(false);
-        txtEstado.setEditable(false);
-        txtTelefone.setEditable(false);
-        txtEmail.setEditable(false);
-
+        Carrinho.setDesconto("0.00");
+        bloquearEdicaoDados();
         atualizarCarrinho();
         
     }

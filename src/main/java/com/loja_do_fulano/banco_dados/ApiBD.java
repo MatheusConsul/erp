@@ -8,6 +8,8 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import com.loja_do_fulano.setor_estoque.Produto;
+import com.loja_do_fulano.setor_vendas.Endereco;
+import com.loja_do_fulano.setor_vendas.PessoaFisica;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -131,7 +133,82 @@ public class ApiBD {
 
 
 
+    public static PessoaFisica pesquisarClietne(String nome_cpf){
+        PessoaFisica cliente = null;
+        
+        System.out.println(" dentro da API de buscar cliente ");
+        
+        try {
 
+            String sql = "SELECT * FROM clientes where nome LIKE ?";
+            PreparedStatement pst = connection.prepareStatement(sql);
+            pst.setString(1,"%" + nome_cpf + "%");
+
+            if(nome_cpf.matches("\\d{11}") ||
+                nome_cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")){
+                sql = "SELECT * FROM clientes where CPF=?";
+                pst = connection.prepareStatement(sql);
+                pst.setString(1,nome_cpf);
+            }
+            
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next()){
+                
+                String rua, bairro, cidade, estado, nome, dataNasc, email,cep;
+                int numCasa, telefone;
+                long cpf;
+                
+                rua = rs.getString("rua");
+                bairro = rs.getString("bairro");
+                cidade = rs.getString("cidade");
+                estado = rs.getString("estado");
+                numCasa = rs.getInt("numero_casa");
+                cep = rs.getString("cep");
+
+                Endereco endereco = new Endereco(rua,bairro,cidade,numCasa,cep,estado);
+                
+                nome = rs.getString("nome");
+                cpf = Long.parseLong(rs.getString("CPF"));
+                dataNasc = rs.getString("data_nascimento");
+                telefone = rs.getInt("telefone");
+                email = rs.getString("email");
+
+                cliente = new PessoaFisica(nome,cpf,dataNasc,telefone,email,endereco);
+
+                //===============================================
+                    System.out.println(" ++++++++++++ CLIENTE: ===========");
+
+                    System.out.println("CPF: "+cliente.getCPF());
+                    System.out.println("Nome: "+cliente.getNome());
+                    System.out.println("DataN: "+cliente.getData_Nascimento());
+                    System.out.println("telefone: "+cliente.getTelefone());
+                    System.out.println("email: "+cliente.getEmail());
+                    System.out.println("rua: "+cliente.getRua());
+                    System.out.println("bairro: "+cliente.getBairro());
+                    System.out.println("cidade: "+cliente.getCidade());
+                    System.out.println("num casa: "+cliente.getNumCasa());
+                    System.out.println("estado: "+cliente.getEstado());
+
+
+                    System.out.println(" ++++++++++++++++++++++++++++++++");
+
+                //===============================================
+              
+
+            }else{
+                System.out.println("Nenhum cliente encontrado!!!");
+            }
+            
+           
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar no banco de dados:");
+            System.out.println(e);
+        }    
+
+
+        return cliente;
+    }
 
 
 

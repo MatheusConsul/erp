@@ -217,7 +217,7 @@ public class TelaVenda1Controller {
         tbColunaPrecoCarrinho.setCellValueFactory(data -> data.getValue().getPrecoTotalProperty().asObject());
 
         tbColunaQuantidadeCarrinho.setCellValueFactory(data -> data.getValue().getQtdDoItemProperty().asObject());
-
+        
         atualizarCarrinho();
         
         //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -233,7 +233,7 @@ public class TelaVenda1Controller {
 
         tbCarrinho.setItems(observableListCarrinho);
         
-        lblValorTotal.setText(Carrinho.getValorTotalCarrinho());
+        lblValorTotal.setText(Carrinho.getSubTotalCarrinho());
 
     }
     

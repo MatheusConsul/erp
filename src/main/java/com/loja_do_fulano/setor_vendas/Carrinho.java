@@ -4,15 +4,15 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.loja_do_fulano.main.App;
 import com.loja_do_fulano.setor_estoque.Produto;
-import com.loja_do_fulano.telas_controller.TelaVenda2Controller;
 
 public class Carrinho {
 
     private static List<Item> carrinhoDeCompras = new ArrayList<>();
-    //private static Float valorTotalCarrinho = 0.00F; 
+    private static Float desconto = 0.00F;
 
     public static void addItem(Produto produto){ 
 
@@ -87,6 +87,9 @@ public class Carrinho {
         for (Item itemDoCarrinho : carrinhoDeCompras) {
               valorTotalCarrinho += itemDoCarrinho.getPrecoTotal();
         }
+
+        valorTotalCarrinho = valorTotalCarrinho - desconto;
+
         if(valorTotalCarrinho < 1000){
             DecimalFormat formato = new DecimalFormat("#0.00");
             valorTotal = formato.format(valorTotalCarrinho);
@@ -97,6 +100,52 @@ public class Carrinho {
         
         return valorTotal;
     } 
+
+    public static String getSubTotalCarrinho(){
+        Float subTotalCarrinho= 0.00F;
+        String subTotalString = "0,00";
+
+        for (Item itemDoCarrinho : carrinhoDeCompras) {
+              subTotalCarrinho += itemDoCarrinho.getPrecoTotal();
+        }
+
+        if(subTotalCarrinho < 1000){
+            DecimalFormat formato = new DecimalFormat("#0.00");
+            subTotalString = formato.format(subTotalCarrinho);
+        }else{
+            DecimalFormat formato = new DecimalFormat("#0,000.00");
+            subTotalString = formato.format(subTotalCarrinho);
+        }
+        
+        return subTotalString;
+    } 
+
+    public static String getValorDesconto(){
+        String valorDesconto = "0,00";
+
+        if(desconto < 1000){
+            DecimalFormat formato = new DecimalFormat("#0.00");
+            valorDesconto = formato.format(desconto);
+        }else{
+            DecimalFormat formato = new DecimalFormat("#0,000.00");
+            valorDesconto = formato.format(desconto);
+        }
+        return valorDesconto;
+    }
+
+    public static void setDesconto(String desc){
+
+        // Define o padrão da expressão regular para verificar um float positivo
+        String padrao = "^\\d*\\.?\\d+$";
+
+        if(Pattern.matches(padrao, desc)){
+            desconto = Float.parseFloat(desc);
+        }else{
+            System.out.println("Valor de desconto invalido");
+        }
+        
+        
+    }
 
     public static void continuarVenda() throws IOException{
         
