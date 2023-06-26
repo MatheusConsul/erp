@@ -8,13 +8,13 @@ public class Produto {
 
     private final SimpleIntegerProperty codigo;
     private final SimpleStringProperty descricao;
-    private final SimpleIntegerProperty quantidade;
+    private final SimpleIntegerProperty qtdDisponivelVenda;
     private final SimpleFloatProperty preco;
 
     public Produto(int codigo, String descricao, int quantidade, Float preco) {
         this.codigo = new SimpleIntegerProperty(codigo);
         this.descricao = new SimpleStringProperty(descricao);
-        this.quantidade = new SimpleIntegerProperty(quantidade);
+        this.qtdDisponivelVenda = new SimpleIntegerProperty(quantidade);
         this.preco = new SimpleFloatProperty(preco);
     }
 
@@ -24,10 +24,6 @@ public class Produto {
 
     public SimpleIntegerProperty codigoProperty() {
         return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo.set(codigo);
     }
 
     public String getDescricao() {
@@ -42,16 +38,16 @@ public class Produto {
         this.descricao.set(descricao);
     }
 
-    public int getQuantidade() {
-        return quantidade.get();
+    public int getQtdDisponivelVenda() {
+        return qtdDisponivelVenda.get();
     }
 
-    public SimpleIntegerProperty quantidadeProperty() {
-        return quantidade;
+    public SimpleIntegerProperty qtdDisponivelVendaProperty() {
+        return qtdDisponivelVenda;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade.set(quantidade);
+    public void setQtdDisponivelVenda(int quantidade) {
+        this.qtdDisponivelVenda.set(quantidade);
     }
 
     public Float getPreco() {

@@ -74,13 +74,13 @@ public class ApiBD {
         
         try {
 
-            String sql = "SELECT * FROM produtos where descricao LIKE ?";
+            String sql = "SELECT * FROM estoque where descricao LIKE ?";
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.setString(1,"%" + produtoPesquisado + "%");
 
             if(produtoPesquisado.matches("23[0-9]+")){
                 int codigo = Integer.parseInt(produtoPesquisado);
-                sql = "SELECT * FROM produtos where codigo=?";
+                sql = "SELECT * FROM estoque where codigo=?";
                 pst = connection.prepareStatement(sql);
                 pst.setInt(1,codigo);
             }
@@ -98,8 +98,8 @@ public class ApiBD {
                  
                     cod = rs.getInt("codigo");
                     desc = rs.getString("descricao");
-                    quant = rs.getInt("quantidade");
                     prec = rs.getFloat("preco");
+                    quant = rs.getInt("produto_disponivel_venda");
 
                     /*DecimalFormat formato = new DecimalFormat("#0.00");
                     String numeroFormatado = formato.format(prec);
@@ -109,7 +109,7 @@ public class ApiBD {
                     
                     retornoConsulta.add(prod);
 
-                    System.out.println("Produto encontrado: " + rs.getString(2));
+                    //System.out.println("Produto encontrado: " + rs.getString(2));
 
                 }while(rs.next());
 

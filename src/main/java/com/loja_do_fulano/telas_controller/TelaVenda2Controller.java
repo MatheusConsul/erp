@@ -2,9 +2,7 @@ package com.loja_do_fulano.telas_controller;
 
 import java.io.IOException;
 
-import com.loja_do_fulano.banco_dados.ApiBD;
 import com.loja_do_fulano.main.App;
-import com.loja_do_fulano.setor_estoque.Produto;
 import com.loja_do_fulano.setor_vendas.Carrinho;
 import com.loja_do_fulano.setor_vendas.Item;
 
@@ -16,35 +14,58 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class TelaVenda1Controller {
+public class TelaVenda2Controller {
 
     private static String usuarioLogado = null;
+    public ObservableList<Item> observableListCarrinho;
 
-    //======================================
-
-    @FXML
-    private Button btnAdicionarCarrinho;
     @FXML
     private Button btnAlterarQuant;
-    @FXML
-    private Button btnContinuarVenda;
+
     @FXML
     private Button btnExcluirItem;
 
     @FXML
-    private Button btnPesquisar;
+    private Button btnFinalizarVenda;
+
+    @FXML
+    private Button btnNovoCliente;
+
+    @FXML
+    private Button btnPesquisarCPF;
 
     @FXML
     private Button btnSair;
+
+    @FXML
+    private Button btnSolicitarDesconto;
+
+    @FXML
+    private Button btnVoltar;
+
+    @FXML
+    private CheckBox cbxCartao;
+
+    @FXML
+    private CheckBox cbxDinheiro;
+
+    @FXML
+    private CheckBox cbxPix;
+
+    @FXML
+    private Label lblDesconto;
+
+    @FXML
+    private Label lblSubTotal;
 
     @FXML
     private Label lblUsuarioLogado;
@@ -65,14 +86,40 @@ public class TelaVenda1Controller {
     private TableColumn<Item, Integer> tbColunaQuantidadeCarrinho;
 
     @FXML
-    private TextField txtCampoPesquisa;
+    private TextField txtBairro;
 
     @FXML
-    void acaoAdicionarCarrinho(ActionEvent event) {
+    private TextField txtCEP;
 
-        Carrinho.addItem(tbProdutos.getSelectionModel().getSelectedItem());
-        atualizarCarrinho();
-    }
+    @FXML
+    private TextField txtCPF;
+
+    @FXML
+    private TextField txtCPFpesquisa;
+
+    @FXML
+    private TextField txtCidade;
+
+    @FXML
+    private TextField txtDataNascimento;
+
+    @FXML
+    private TextField txtEmail;
+
+    @FXML
+    private TextField txtEstado;
+
+    @FXML
+    private TextField txtNome;
+
+    @FXML
+    private TextField txtNumCasa;
+
+    @FXML
+    private TextField txtRua;
+
+    @FXML
+    private TextField txtTelefone;
 
     @FXML
     void acaoAlterarQuant(ActionEvent event) {
@@ -125,102 +172,66 @@ public class TelaVenda1Controller {
         });
     }
 
-
-    @FXML
-    void acaoContinuarVenda(ActionEvent event) throws IOException {
-        TelaVenda2Controller.setUsuarioLogado(usuarioLogado);
-        Carrinho.continuarVenda();
-        
-    }
-
     @FXML
     void acaoExcluirItem(ActionEvent event) {
+
         if(tbCarrinho.getSelectionModel().getSelectedItem() != null){
             Carrinho.excluirItem(tbCarrinho.getSelectionModel().getSelectedItem());
         }else{
             System.out.println("Nenhum item selecionado para excluir");
         }
         atualizarCarrinho();
-    }
 
-    
-
-
-    //=======================================
-
-
-
-    @FXML
-    private TableColumn<Produto, Integer> tbColunaCodigo;
-
-    @FXML
-    private TableColumn<Produto, String> tbColunaDescricao;
-
-    @FXML
-    private TableColumn<Produto, Float> tbColunaPreco;
-
-    @FXML
-    private TableColumn<Produto, Integer> tbColunaQuantidade;
-
-    @FXML
-    private TableView<Produto> tbProdutos;
-
-    public ObservableList<Produto> observableListProdutos;
-    public ObservableList<Item> observableListCarrinho;
-
-    @FXML
-    void acaoPesquisarEnter(KeyEvent event) throws IOException{
-        
-        if (event.getCode() == KeyCode.ENTER) {
-            pesquisarProduto();
-        } 
     }
 
     @FXML
-    private void pesquisarProduto() throws IOException { 
-        
-        System.out.println("\n\n\n PESUISANDO \n\n");
+    void acaoFinalizarVenda(ActionEvent event) {
 
-        observableListProdutos = FXCollections.observableArrayList(ApiBD.buscaProdutos(txtCampoPesquisa.getText()));
+    }
 
-        tbProdutos.setItems(observableListProdutos);
-                
+    @FXML
+    void acaoNovoCliente(ActionEvent event) {
+
+        txtNome.setEditable(true);txtNome.setText("");
+        txtCPF.setEditable(true);txtCPF.setText("");
+        txtDataNascimento.setEditable(true);txtDataNascimento.setText("");
+        txtRua.setEditable(true);txtRua.setText("");
+        txtBairro.setEditable(true);txtBairro.setText("");
+        txtNumCasa.setEditable(true);txtNumCasa.setText("");
+        txtCEP.setEditable(true);txtCEP.setText("");
+        txtCidade.setEditable(true);txtCidade.setText("");
+        txtEstado.setEditable(true);txtEstado.setText("");
+        txtTelefone.setEditable(true);txtTelefone.setText("");
+        txtEmail.setEditable(true);txtEmail.setText("");
+
+    }
+
+    @FXML
+    void acaoPesquisarCPFEnter(KeyEvent event) {
+        acaoPesquisarCPF(null);
     }
 
     @FXML
     void acaoSair(ActionEvent event) throws IOException {
-        Stage stage = (Stage) btnPesquisar.getScene().getWindow();
+        Stage stage = (Stage)btnSair.getScene().getWindow();
         App.telaLogin(stage);
-        
+
     }
 
+    @FXML
+    void acaoSolicitarDesconto(ActionEvent event) {
+
+    }
 
     @FXML
-    private void initialize() throws IOException {
-        
-        lblUsuarioLogado.setText("Bem vindo " + usuarioLogado);
+    void acaoVoltar(ActionEvent event) throws IOException {
+        TelaVenda1Controller.setUsuarioLogado(usuarioLogado); 
+        App.setRoot("telaVenda1");
+    }
 
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    @FXML
+    void acaoPesquisarCPF(ActionEvent event) {
 
-        tbColunaCodigo.setCellValueFactory(data -> data.getValue().codigoProperty().asObject());
-
-        tbColunaDescricao.setCellValueFactory(data -> data.getValue().descricaoProperty());
-        
-        tbColunaQuantidade.setCellValueFactory(data -> data.getValue().qtdDisponivelVendaProperty().asObject());
-        
-        tbColunaPreco.setCellValueFactory(data -> data.getValue().precoProperty().asObject()); 
-
-        //=================================
-
-        tbColunaDescricaoCarrinho.setCellValueFactory(data -> data.getValue().descricaoProperty());
-
-        tbColunaPrecoCarrinho.setCellValueFactory(data -> data.getValue().getPrecoTotalProperty().asObject());
-
-        tbColunaQuantidadeCarrinho.setCellValueFactory(data -> data.getValue().getQtdDoItemProperty().asObject());
-
-        atualizarCarrinho();
-        
-        //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     }
 
     public static void setUsuarioLogado(String usuario){
@@ -233,9 +244,35 @@ public class TelaVenda1Controller {
 
         tbCarrinho.setItems(observableListCarrinho);
         
-        lblValorTotal.setText(Carrinho.getValorTotalCarrinho());
+        lblSubTotal.setText(Carrinho.getValorTotalCarrinho());
 
     }
-    
-    
+
+    @FXML
+    private void initialize() throws IOException {
+        
+        lblUsuarioLogado.setText("Bem vindo " + usuarioLogado);
+
+        tbColunaDescricaoCarrinho.setCellValueFactory(data -> data.getValue().descricaoProperty());
+
+        tbColunaPrecoCarrinho.setCellValueFactory(data -> data.getValue().getPrecoTotalProperty().asObject());
+
+        tbColunaQuantidadeCarrinho.setCellValueFactory(data -> data.getValue().getQtdDoItemProperty().asObject());
+
+        txtNome.setEditable(false);
+        txtCPF.setEditable(false);
+        txtDataNascimento.setEditable(false);
+        txtRua.setEditable(false);
+        txtBairro.setEditable(false);
+        txtNumCasa.setEditable(false);
+        txtCEP.setEditable(false);
+        txtCidade.setEditable(false);
+        txtEstado.setEditable(false);
+        txtTelefone.setEditable(false);
+        txtEmail.setEditable(false);
+
+        atualizarCarrinho();
+        
+    }
+
 }

@@ -1,49 +1,49 @@
 package com.loja_do_fulano.setor_vendas;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.loja_do_fulano.main.App;
 import com.loja_do_fulano.setor_estoque.Produto;
+import com.loja_do_fulano.telas_controller.TelaVenda2Controller;
 
 public class Carrinho {
 
-    private static List<Produto> carrinhoDeCompras = new ArrayList<>();
+    private static List<Item> carrinhoDeCompras = new ArrayList<>();
     //private static Float valorTotalCarrinho = 0.00F; 
 
-    public static void addItem(Produto item){ 
+    public static void addItem(Produto produto){ 
 
-        Produto itemRecebido = new Produto(item.getCodigo(),item.getDescricao(), item.getQuantidade(), item.getPreco());
+        Item item_novo = new Item(produto.getCodigo(),produto.getDescricao(), 1,produto.getQtdDisponivelVenda(),produto.getPreco());
         boolean itemRepetido = false;
-        
-        itemRecebido.setQuantidade(1);
 
         if(carrinhoDeCompras.size() == 0){
-            carrinhoDeCompras.add(itemRecebido);
+            carrinhoDeCompras.add(item_novo);
         }else{
-            for (Produto produto : carrinhoDeCompras) {
+            for (Item item_carrinho : carrinhoDeCompras) {
                 
-                if (produto.getCodigo() == itemRecebido.getCodigo()) {
-                    produto.setQuantidade(produto.getQuantidade()+1);
-                    produto.setPreco(itemRecebido.getPreco()*produto.getQuantidade());
+                if (item_carrinho.getCodigo() == item_novo.getCodigo()) {
+                    item_carrinho.setQtdDoItem(item_carrinho.getQtdDoItem()+1);
                     itemRepetido = true;
                 }
             }
             if(itemRepetido == false){
-                carrinhoDeCompras.add(itemRecebido);
+                carrinhoDeCompras.add(item_novo);
             }
         }
     }
 
-    public static void excluirItem(Produto item){
+    public static void excluirItem(Item item){
         
         if(carrinhoDeCompras.size() == 0){
             System.out.println(" Carrinho está vazio");
         }else{
-            Produto produto;
+            Item itemDoCarrinho;
             for (int i = 0; i < carrinhoDeCompras.size(); i++) { 
-                produto = carrinhoDeCompras.get(i);
-                if (produto.getCodigo() == item.getCodigo()) {
+                itemDoCarrinho = carrinhoDeCompras.get(i);
+                if (itemDoCarrinho.getCodigo() == item.getCodigo()) {
                     carrinhoDeCompras.remove(i);
                 }
             }
@@ -51,43 +51,63 @@ public class Carrinho {
 
     }
 
-    public static void alterarQuantidade(Produto item, int novaQuant){
+    public static void alterarQuantidade(Item item, int novaQuant){
 
         if(carrinhoDeCompras.size() == 0){
             System.out.println(" Carrinho está vazio");
         }else{
-            Produto produto;
+            Item itemDoCarrinho;
             for (int i = 0; i < carrinhoDeCompras.size(); i++) { 
-                produto = carrinhoDeCompras.get(i);
-                if (produto.getCodigo() == item.getCodigo()) {
-                    produto.setQuantidade(novaQuant);
+                
+                itemDoCarrinho = carrinhoDeCompras.get(i);
+
+                if (itemDoCarrinho.getCodigo() == item.getCodigo()) {
+                    itemDoCarrinho.setQtdDoItem(novaQuant);
                 }
             }
         }
     }
 
-    public static  List<Produto> getListaProdutos(){
-         System.out.println("Lista do carrinho:");
-        for (Produto produto : carrinhoDeCompras) {
-            String descricao = produto.getDescricao();
-            int quantidade = produto.getQuantidade();
-            System.out.println(descricao + " - " + quantidade);
+    public static  List<Item> getListaItens(){
+         
+        //System.out.println("Lista do carrinho:");
+        
+         for (Item itemDoCarrinho : carrinhoDeCompras) {
+            String descricao = itemDoCarrinho.getDescricao();
+            int quantidade = itemDoCarrinho.getQtdDoItem();
+            //System.out.println(descricao + " - " + quantidade);
         }
-
         return carrinhoDeCompras;
     }
 
     public static String getValorTotalCarrinho(){
         Float valorTotalCarrinho= 0.00F;
+        String valorTotal = "0,00";
 
-        for (Produto produto : carrinhoDeCompras) {
-              valorTotalCarrinho += produto.getPreco();
+        for (Item itemDoCarrinho : carrinhoDeCompras) {
+              valorTotalCarrinho += itemDoCarrinho.getPrecoTotal();
         }
-
-        DecimalFormat formato = new DecimalFormat("#0,000.00");
-        String valorTotal = formato.format(valorTotalCarrinho);
+        if(valorTotalCarrinho < 1000){
+            DecimalFormat formato = new DecimalFormat("#0.00");
+            valorTotal = formato.format(valorTotalCarrinho);
+        }else{
+            DecimalFormat formato = new DecimalFormat("#0,000.00");
+            valorTotal = formato.format(valorTotalCarrinho);
+        }
+        
         return valorTotal;
     } 
+
+    public static void continuarVenda() throws IOException{
+        
+        if(carrinhoDeCompras.size() == 0 || carrinhoDeCompras == null){
+            System.out.println("Carrinho vazio, por favor selecione algum produto para continuar!");
+        }else{
+            App.setRoot("telaVenda2");
+        }
+        
+
+    }
     
 
 

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane accessibleRole="COMBO_BOX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="967.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loja_do_fulano.telas_controller.TelaVenda2Controller">
+   <children>
+      <Button fx:id="btnPesquisarCPF" layoutX="237.0" layoutY="26.0" mnemonicParsing="false" onAction="#acaoPesquisarCPF" text="Pesquisar" />
+      <TextField fx:id="txtCPFpesquisa" layoutX="14.0" layoutY="26.0" onKeyPressed="#acaoPesquisarCPFEnter" prefHeight="26.0" prefWidth="214.0" text="Digite o CPF sem pontos ou espaços" />
+      <Button fx:id="btnSair" layoutX="894.0" layoutY="11.0" mnemonicParsing="false" onAction="#acaoSair" prefHeight="32.0" prefWidth="58.0" text="Sair" />
+      <Label fx:id="lblUsuarioLogado" layoutX="14.0" layoutY="642.0" text="Usuario">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tbCarrinho" layoutX="542.0" layoutY="93.0" prefHeight="451.0" prefWidth="410.0">
+         <columns>
+            <TableColumn fx:id="tbColunaDescricaoCarrinho" prefWidth="264.00006103515625" text="Descrição" />
+            <TableColumn fx:id="tbColunaQuantidadeCarrinho" prefWidth="73.5999755859375" text="Quantidade" />
+            <TableColumn fx:id="tbColunaPrecoCarrinho" prefWidth="64.7999267578125" text="Preço" />
+         </columns>
+      </TableView>
+      <Label layoutX="652.0" layoutY="65.0" text="Carrinho de compras:">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnExcluirItem" layoutX="542.0" layoutY="546.0" mnemonicParsing="false" onAction="#acaoExcluirItem" text="Excluir Item" textFill="RED" />
+      <Button fx:id="btnAlterarQuant" layoutX="632.0" layoutY="546.0" mnemonicParsing="false" onAction="#acaoAlterarQuant" text="Alterar quantidade" />
+      <Button fx:id="btnFinalizarVenda" layoutX="782.0" layoutY="624.0" mnemonicParsing="false" onAction="#acaoFinalizarVenda" prefHeight="41.0" prefWidth="172.0" text="Finalizar Venda">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Label layoutX="807.0" layoutY="548.0" text="SubTotal:  R$">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblSubTotal" layoutX="906.0" layoutY="548.0" text="0,00">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnNovoCliente" layoutX="321.0" layoutY="26.0" mnemonicParsing="false" onAction="#acaoNovoCliente" text="Novo Cliente" />
+      <Button fx:id="btnVoltar" layoutX="824.0" layoutY="11.0" mnemonicParsing="false" onAction="#acaoVoltar" prefHeight="32.0" prefWidth="58.0" text="Voltar" />
+      <Label layoutX="803.0" layoutY="572.0" text="Desconto:  R$ -">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="800.0" layoutY="596.0" text="Valor Total: R$">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDesconto" layoutX="906.0" layoutY="572.0" text="0,00">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblValorTotal" layoutX="906.0" layoutY="596.0" text="0,00">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnSolicitarDesconto" layoutX="632.0" layoutY="580.0" mnemonicParsing="false" onAction="#acaoSolicitarDesconto" prefHeight="25.0" prefWidth="115.0" text="Solicitar Desconto" />
+      <Label layoutX="542.0" layoutY="609.0" text="Forma de Pagamento:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="cbxDinheiro" layoutX="542.0" layoutY="636.0" mnemonicParsing="false" text="Dinheiro" />
+      <CheckBox fx:id="cbxCartao" layoutX="632.0" layoutY="636.0" mnemonicParsing="false" text="Cartão" />
+      <CheckBox fx:id="cbxPix" layoutX="710.0" layoutY="636.0" mnemonicParsing="false" text="Pix" />
+      <Label layoutX="12.0" layoutY="338.0" text="BAIRRO:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="16.0" layoutY="148.0" text="NOME:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="34.0" layoutY="182.0" text="CPF:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="201.0" layoutY="182.0" text="DATA NASCIMENTO:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="195.0" layoutY="94.0" text="Dados do Cliente:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="12.0" layoutY="369.0" text="CIDADE:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="32.0" layoutY="301.0" text="RUA:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtNome" layoutX="72.0" layoutY="146.0" prefHeight="25.0" prefWidth="457.0" />
+      <Separator layoutY="101.0" prefHeight="9.0" prefWidth="184.0" />
+      <Separator layoutX="314.0" layoutY="101.0" prefHeight="9.0" prefWidth="227.0" />
+      <TextField fx:id="txtCPF" layoutX="72.0" layoutY="179.0" prefHeight="25.0" prefWidth="115.0" />
+      <TextField fx:id="txtDataNascimento" layoutX="355.0" layoutY="180.0" prefHeight="25.0" prefWidth="95.0" />
+      <Label layoutX="186.0" layoutY="247.0" text="Endereço do Cliente:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Separator layoutY="255.0" prefHeight="9.0" prefWidth="184.0" />
+      <Separator layoutX="320.0" layoutY="255.0" prefHeight="9.0" prefWidth="221.0" />
+      <TextField fx:id="txtRua" layoutX="72.0" layoutY="298.0" prefHeight="25.0" prefWidth="457.0" />
+      <TextField fx:id="txtNumCasa" layoutX="291.0" layoutY="335.0" prefHeight="25.0" prefWidth="55.0" />
+      <TextField fx:id="txtCidade" layoutX="73.0" layoutY="366.0" prefHeight="25.0" prefWidth="197.0" />
+      <Label layoutX="217.0" layoutY="338.0" text="NUMERO:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtBairro" layoutX="72.0" layoutY="335.0" prefHeight="25.0" prefWidth="139.0" />
+      <Label layoutX="355.0" layoutY="338.0" text="CEP:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtCEP" layoutX="390.0" layoutY="335.0" prefHeight="25.0" prefWidth="139.0" />
+      <Label layoutX="289.0" layoutY="369.0" text="ESTADO:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtEstado" layoutX="357.0" layoutY="366.0" prefHeight="25.0" prefWidth="172.0" />
+      <Label layoutX="193.0" layoutY="430.0" text="Contato do Cliente:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Separator layoutY="438.0" prefHeight="9.0" prefWidth="184.0" />
+      <Separator layoutX="320.0" layoutY="438.0" prefHeight="9.0" prefWidth="221.0" />
+      <Label layoutX="13.0" layoutY="480.0" text="TELEFONE:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtTelefone" layoutX="92.0" layoutY="478.0" prefHeight="25.0" prefWidth="139.0" />
+      <Label layoutX="25.0" layoutY="515.0" text="EMAIL:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtEmail" layoutX="92.0" layoutY="512.0" prefHeight="25.0" prefWidth="259.0" />
+   </children>
+</AnchorPane>
