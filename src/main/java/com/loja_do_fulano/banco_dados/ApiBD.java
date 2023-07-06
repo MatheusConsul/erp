@@ -132,12 +132,9 @@ public class ApiBD {
     }
 
 
-
     public static PessoaFisica pesquisarClietne(String nome_cpf){
         PessoaFisica cliente = null;
-        
-        System.out.println(" dentro da API de buscar cliente ");
-        
+
         try {
 
             String sql = "SELECT * FROM clientes where nome LIKE ?";
@@ -190,7 +187,6 @@ public class ApiBD {
                     System.out.println("num casa: "+cliente.getNumCasa());
                     System.out.println("estado: "+cliente.getEstado());
 
-
                     System.out.println(" ++++++++++++++++++++++++++++++++");
 
                 //===============================================
@@ -210,7 +206,14 @@ public class ApiBD {
         return cliente;
     }
 
+    public static Boolean salvarCliente(PessoaFisica cliente){
+        Boolean salvo = false;
 
+        // salvar cliente no Banco 
+
+
+        return salvo;
+    }
 
     
 }

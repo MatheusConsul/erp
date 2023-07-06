@@ -5,7 +5,9 @@ import java.io.IOException;
 import com.loja_do_fulano.banco_dados.ApiBD;
 import com.loja_do_fulano.main.App;
 import com.loja_do_fulano.setor_vendas.Carrinho;
+import com.loja_do_fulano.setor_vendas.Endereco;
 import com.loja_do_fulano.setor_vendas.Item;
+import com.loja_do_fulano.setor_vendas.Pedido;
 import com.loja_do_fulano.setor_vendas.PessoaFisica;
 
 import javafx.collections.FXCollections;
@@ -189,6 +191,54 @@ public class TelaVenda2Controller {
 
     @FXML
     void acaoFinalizarVenda(ActionEvent event) {
+
+        String cpf = txtCPF.getText();
+        cpf = cpf.trim(); // tira os espaços
+
+        if(cpf.isEmpty()){
+            System.out.println("Obrigatorio preencher um cliente!!!");
+        }else{
+            System.out.println("CPF do cliente que vai comprar: " + cpf);
+            PessoaFisica cliente = ApiBD.pesquisarClietne(cpf);
+            
+            if(cliente != null){
+                
+                Pedido.finalizarCompra(cliente);
+
+            }else{
+
+                String rua, bairro, cidade, estado, nome, dataNasc, email,cep;
+                int numCasa, telefone;
+                long cpff;
+                
+                rua = txtRua.getText();
+                bairro = txtBairro.getText();
+                cidade = txtCidade.getText();
+                estado = txtEstado.getText();
+                numCasa = Integer.parseInt(txtNumCasa.getText());
+                cep = txtCEP.getText();
+
+                Endereco endereco = new Endereco(rua,bairro,cidade,numCasa,cep,estado);
+                
+                nome = txtNome.getText();
+                cpff = Long.parseLong(txtCEP.getText());
+                dataNasc = txtDataNascimento.getText();
+                telefone = Integer.parseInt(txtTelefone.getText());
+                email = txtEmail.getText();
+
+                cliente = new PessoaFisica(nome,cpff,dataNasc,telefone,email,endereco);
+
+                if(ApiBD.salvarCliente(cliente)){
+                    System.out.println("Cliente Salvo com sucesso!!");
+                    Pedido.finalizarCompra(cliente);
+                }else{
+                    System.out.println("Erro ao salvar Cliente!!");
+                }
+
+                // depois chamar Pedido.finalizar e mandar cliente novo
+
+            }
+        }
 
     }
 

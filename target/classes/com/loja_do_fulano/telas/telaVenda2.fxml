@@ -13,7 +13,7 @@
 <AnchorPane accessibleRole="COMBO_BOX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="967.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loja_do_fulano.telas_controller.TelaVenda2Controller">
    <children>
       <Button fx:id="btnPesquisarCPF" layoutX="237.0" layoutY="26.0" mnemonicParsing="false" onAction="#acaoPesquisarCPF" text="Pesquisar" />
-      <TextField fx:id="txtCPFpesquisa" layoutX="14.0" layoutY="26.0" onKeyPressed="#acaoPesquisarCPFEnter" prefHeight="26.0" prefWidth="214.0" text="Digite o CPF sem pontos ou espaços" />
+      <TextField fx:id="txtCPFpesquisa" layoutX="14.0" layoutY="26.0" onKeyPressed="#acaoPesquisarCPFEnter" prefHeight="26.0" prefWidth="214.0" />
       <Button fx:id="btnSair" layoutX="894.0" layoutY="11.0" mnemonicParsing="false" onAction="#acaoSair" prefHeight="32.0" prefWidth="58.0" text="Sair" />
       <Label fx:id="lblUsuarioLogado" layoutX="14.0" layoutY="642.0" text="Usuario">
          <font>
