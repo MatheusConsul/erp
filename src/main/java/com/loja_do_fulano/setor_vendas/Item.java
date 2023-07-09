@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Item {
+public class Item{
     
     private final SimpleIntegerProperty codigo;
     private final SimpleStringProperty descricao;

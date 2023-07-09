@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.List;
 
+import com.loja_do_fulano.setor_caixa.Pedido;
 import com.loja_do_fulano.setor_estoque.Produto;
 import com.loja_do_fulano.setor_vendas.Endereco;
 import com.loja_do_fulano.setor_vendas.PessoaFisica;
@@ -209,11 +209,165 @@ public class ApiBD {
     public static Boolean salvarCliente(PessoaFisica cliente){
         Boolean salvo = false;
 
-        // salvar cliente no Banco 
+        try {
+            
+            String sql = "INSERT INTO clientes (CPF, nome, data_nascimento, telefone, email, rua, bairro, cidade, numero_casa, cep, estado)  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+            PreparedStatement pst = connection.prepareStatement(sql);
+            pst.setString(1,Long.toString(cliente.getCPF()));
+            pst.setString(2,cliente.getNome());
+            pst.setString(3,cliente.getData_Nascimento());
+            pst.setString(4,Integer.toString(cliente.getTelefone()));
+            pst.setString(5,cliente.getEmail());
+            pst.setString(6,cliente.getRua());
+            pst.setString(7,cliente.getBairro());
+            pst.setString(8,cliente.getCidade());
+            pst.setString(9,Integer.toString(cliente.getNumCasa()));
+            pst.setString(10,cliente.getCep());
+            pst.setString(11,cliente.getEstado()); 
+
+            int linhasAfetadas = pst.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                salvo = true;
+                System.out.println("Salvo no BANCO DE DADOS com sucesso!");
+            } else {
+                System.out.println("Falha ao adicionar o cliente.");
+                salvo = false;
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+           
+        return salvo;
+    }
+
+    public static boolean salvarPedido(long cpf, String nome, String valorTotal, String subTotal, String valorDesconto, byte[] listaItens, String statusPedido,String tipoPagamento){
+        
+        boolean salvo = false;
+
+        try {
+            
+            String sql = "INSERT INTO pedidos (cpf_cliente, nome_cliente, total, sub_total, desconto, lista_itens, status_pedido, tipo_pag) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement pst = connection.prepareStatement(sql);
+            pst.setString(1,Long.toString(cpf));
+            pst.setString(2,nome);
+            pst.setString(3,valorTotal);
+            pst.setString(4, subTotal);
+            pst.setString(5, valorDesconto);
+            pst.setBytes(6, listaItens);
+            pst.setString(7, statusPedido);
+            pst.setString(8, tipoPagamento);
+ 
+
+            int linhasAfetadas = pst.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                salvo = true;
+                System.out.println("Pedido salvo no BANCO DE DADOS com sucesso!");
+            } else {
+                System.out.println("Falha ao salvar pedido de venda no banco!!.");
+                salvo = false;
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return salvo;
     }
 
+
+    public static List<Pedido> pesquisarPedidosPorStatus(String statusPedido){
+        
+        List<Pedido> retornoConsulta = new ArrayList<>(); 
+        
+        try {
+
+            String sql = "SELECT * FROM pedidos where status_pedido LIKE ?";
+            PreparedStatement pst = connection.prepareStatement(sql);
+            pst.setString(1,statusPedido);
+
+            if(statusPedido.equals("todos") ){
+                sql = "SELECT * FROM pedidos";
+                pst = connection.prepareStatement(sql);
+
+            }
+
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next()){
+
+                do {
+                
+                    Pedido pedido = new Pedido(
+                    rs.getInt("num_pedido"),
+                    rs.getString("cpf_cliente"),
+                    rs.getString("nome_cliente"),
+                    rs.getString("total"),
+                    rs.getString("sub_total"),
+                    rs.getString("desconto"),
+                    rs.getString("status_pedido"),
+                    rs.getString("tipo_pag"));
+                    
+                    retornoConsulta.add(pedido);
+
+                }while(rs.next());
+
+            }else{
+                retornoConsulta = null;
+            }
+            
+           
+        } catch (Exception e) {
+            //retornoConsulta.add("ERRO AO BUSCAR USUARIO EM BD: ");
+            //retornoConsulta.addAll((Collection<? extends String>) e);
+           retornoConsulta = null;
+        }    
+
+        return retornoConsulta;
+    }
+
+    public static boolean alterarStatusPedido(String novoStatus, int numPedido){
+        boolean salvo = false;
+
+        if(novoStatus.equals("Aprovado")||novoStatus.equals("Reprovado") || novoStatus.equals("Entregue")){
+
+            try {
+            
+                String sql = "UPDATE pedidos SET status_pedido = ? WHERE num_pedido = ?";
+                PreparedStatement pst = connection.prepareStatement(sql);
+                pst.setString(1, novoStatus);
+                pst.setInt(2, numPedido);
+        
+                int linhasAfetadas = pst.executeUpdate();
+        
+                if (linhasAfetadas > 0) {
+                System.out.println("Atualização realizada com sucesso!");
+                salvo = true;
+                } else {
+                    System.out.println("Nenhuma linha afetada pela atualização.");
+                    salvo = false;
+                }
+            
+            } catch (SQLException e) {
+                System.out.println("Erro ao tentar altera status pedido:");
+                e.printStackTrace();
+                salvo = false;
+                
+            }
+
+            return salvo;
+        }else{
+            salvo = false;
+            System.out.println("Status de Pedido invalido!!!");
+        }
+
+        return salvo;
+    }
+
+    
     
 }

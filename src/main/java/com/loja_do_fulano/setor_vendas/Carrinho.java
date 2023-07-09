@@ -5,6 +5,19 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
+
+import com.loja_do_fulano.banco_dados.ApiBD;
+
+/*
+ * 
+    resumo: O Objetivo, metado usado, resultado*...
+    Apresentação como vai ser realizado...
+    Na intrudução relacionar as metrica e refatoração 
+    
+
+ */
 
 import com.loja_do_fulano.main.App;
 import com.loja_do_fulano.setor_estoque.Produto;
@@ -155,9 +168,64 @@ public class Carrinho {
             App.setRoot("telaVenda2");
         }
         
-
     }
     
+    public static void finalizarCompra(PessoaFisica cliente){
 
+        
+        if(serealizarItens().equals(null)){
+            System.out.println("Erro ao serealizar a lista de itens!!!");
+
+        }else{
+            byte[] listaSerealizada = serealizarItens();
+            String tipoPagamento = "Dinheiro";
+            String statusPedido = "Realizado";
+
+            boolean pedidoSalvo = ApiBD.salvarPedido(cliente.getCPF(),cliente.getNome(), getValorTotalCarrinho(),getSubTotalCarrinho(), getValorDesconto(), listaSerealizada, statusPedido, tipoPagamento);
+
+            if(pedidoSalvo){
+                System.out.println("Pedido de venda salvo com sucesso!!!");
+                // limpar carrinho e voltar tela de login 
+            }else{
+                System.out.println("Erro ao salvar pedido de venda!!!");
+            }
+
+        }
+
+        
+ 
+        // verificar todos os dados inclusive se tem disponibilidade de estoque
+        // Criar e salvar o pedido no banco de dados
+
+
+    }
+
+    private static byte[] serealizarItens(){
+        byte[] listaSerealizada = null;
+        
+        try {
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+
+            List<ItemSerializable> listaItensSerializables = new ArrayList<>();
+
+            for (Item itemDoCarrinho : carrinhoDeCompras) {
+
+                ItemSerializable itemSerializable = new ItemSerializable(itemDoCarrinho.getCodigo(), itemDoCarrinho.getDescricao(), itemDoCarrinho.getQtdDoItem(),itemDoCarrinho.getQtdDisponivelVenda(), itemDoCarrinho.getPrecoUnitario());
+
+                listaItensSerializables.add(itemSerializable);
+            }
+            
+            oos.writeObject(listaItensSerializables);
+            oos.close();
+            listaSerealizada = baos.toByteArray();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return listaSerealizada;
+    }
 
 }

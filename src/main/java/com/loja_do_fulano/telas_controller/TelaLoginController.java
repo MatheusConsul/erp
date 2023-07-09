@@ -54,6 +54,10 @@ public class TelaLoginController{
             }else if(retornoConsulta.get(0).equals("estoque")){
                 App.setRoot("telaEstoque");
                 stageLogin.close();
+            }else if(retornoConsulta.get(0).equals("caixa")){
+                TelaCaixaController.setUsuarioLogado(retornoConsulta.get(1));
+                App.setRoot("telaCaixa");
+                stageLogin.close();
             }else{
                 for (String str : retornoConsulta) {
                     System.out.println(str);

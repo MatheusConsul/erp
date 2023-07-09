@@ -15,7 +15,7 @@
       <Button fx:id="btnEstoque" layoutX="62.0" layoutY="101.0" mnemonicParsing="false" onAction="#abrirTelaEstoque" prefHeight="55.0" prefWidth="143.0" text="Estoque" />
       <Button layoutX="222.0" layoutY="101.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="143.0" text="Venda" />
       <Button layoutX="384.0" layoutY="101.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="143.0" text="Relatorios" />
-      <Button layoutX="547.0" layoutY="101.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="143.0" text="Novo Funcionario" />
+      <Button fx:id="btnAcompnharVenda" layoutX="547.0" layoutY="101.0" mnemonicParsing="false" onAction="#acaoAcompanharVenda" prefHeight="55.0" prefWidth="143.0" text="Acompanhar Vendas" />
       <Button layoutX="63.0" layoutY="179.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="143.0" text="Cadastro Mercadorias" />
       <Button layoutX="223.0" layoutY="179.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="143.0" text="Folha Pagamento" />
       <Button layoutX="385.0" layoutY="179.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="143.0" text="Estoque" />
