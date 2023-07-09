@@ -368,6 +368,33 @@ public class ApiBD {
         return salvo;
     }
 
-    
+    public static byte[] buscarItensPedido(int numPedido){
+        
+        byte[] itensSerealizados = null; 
+        
+        try {
+
+            String sql = "SELECT * FROM pedidos where num_pedido LIKE ?";
+            PreparedStatement pst = connection.prepareStatement(sql);
+            pst.setInt(1,numPedido);
+
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next()){
+                itensSerealizados = rs.getBytes("lista_itens");
+            }else{
+                itensSerealizados = null;
+            }
+            
+           
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar itens serealizados no banco de dados");
+            e.printStackTrace();
+           itensSerealizados = null;
+        }    
+
+        return itensSerealizados;
+    }
+
     
 }

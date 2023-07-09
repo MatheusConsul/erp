@@ -190,7 +190,7 @@ public class TelaVenda2Controller {
     }
 
     @FXML
-    void acaoFinalizarVenda(ActionEvent event) {
+    void acaoFinalizarVenda(ActionEvent event) throws IOException {
 
         String cpf = txtCPF.getText();
         cpf = cpf.trim(); // tira os espaços
@@ -202,8 +202,8 @@ public class TelaVenda2Controller {
             PessoaFisica cliente = ApiBD.pesquisarClietne(cpf);
             
             if(cliente != null){
-                
-                Carrinho.finalizarCompra(cliente);
+                Stage stage = (Stage) btnVoltar.getScene().getWindow();
+                Carrinho.finalizarCompra(cliente,stage);
 
             }else{
 
@@ -244,7 +244,8 @@ public class TelaVenda2Controller {
 
                     if(ApiBD.salvarCliente(cliente)){
                         System.out.println("Cliente Salvo com sucesso!!");
-                        Carrinho.finalizarCompra(cliente);
+                        Stage stage = (Stage) btnVoltar.getScene().getWindow();
+                        Carrinho.finalizarCompra(cliente,stage);
                     }else{
                         System.out.println("Erro ao salvar Cliente!!");
                     }

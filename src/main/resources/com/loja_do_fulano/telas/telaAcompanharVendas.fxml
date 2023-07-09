@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="lblAviso" accessibleRole="COMBO_BOX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="967.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loja_do_fulano.telas_controller.TelaEntregaController">
+<AnchorPane fx:id="lblAviso" accessibleRole="COMBO_BOX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="967.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loja_do_fulano.telas_controller.TelaAcompanharVendasController">
    <children>
       <Button fx:id="btnSair" layoutX="894.0" layoutY="11.0" mnemonicParsing="false" onAction="#acaoSair" prefHeight="32.0" prefWidth="58.0" text="Sair" />
       <Label fx:id="lblUsuarioLogado" layoutX="14.0" layoutY="642.0" text="Usuario">
@@ -15,7 +15,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TableView fx:id="tbPedidosAprovados" layoutX="28.0" layoutY="139.0" prefHeight="383.0" prefWidth="518.0" onMouseClicked="#acaoSelecionarItem">
+      <TableView fx:id="tbTodosPedidos" layoutX="28.0" layoutY="139.0" onMouseClicked="#acaoSelecionarItem" prefHeight="383.0" prefWidth="518.0">
          <columns>
             <TableColumn fx:id="colunaPedido" prefWidth="67.99999618530273" text="N° Pedido:" />
             <TableColumn fx:id="colunaCPF" prefWidth="101.60000610351562" text="CPF:" />
@@ -23,17 +23,12 @@
             <TableColumn fx:id="colunaStatusPedido" prefWidth="107.20001220703125" text="Status Pedido" />
          </columns>
       </TableView>
-      <Label layoutX="199.0" layoutY="97.0" text="Pedidos de clientes:">
+      <Label layoutX="199.0" layoutY="97.0" text="Todos os Pedidos:">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
       </Label>
-      <Button fx:id="btnRealizarEntrega" layoutX="719.0" layoutY="568.0" mnemonicParsing="false" onAction="#acaoRealizarEntrega" prefHeight="51.0" prefWidth="195.0" text="Realizar Entrega" textFill="RED">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnAtualizarLista" layoutX="52.0" layoutY="568.0" mnemonicParsing="false" onAction="#acaoAtualizarLista" prefHeight="51.0" prefWidth="195.0" text="Atualizar Pedidos" textAlignment="CENTER" textFill="#128e04">
+      <Button fx:id="btnAtualizarLista" layoutX="350.0" layoutY="545.0" mnemonicParsing="false" onAction="#acaoAtualizarLista" prefHeight="51.0" prefWidth="195.0" text="Atualizar Pedidos" textAlignment="CENTER" textFill="#128e04">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -50,11 +45,6 @@
             <TableColumn fx:id="colunaQtd" prefWidth="60.0" text="Qtd:" />
         </columns>
       </TableView>
-      <Label layoutX="319.0" layoutY="584.0" text="Atenção selecione um pedido para realizar a entrega!">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
       <Button fx:id="btnVoltar" layoutX="818.0" layoutY="11.0" mnemonicParsing="false" onAction="#acaoVoltar" prefHeight="32.0" prefWidth="58.0" text="Voltar" />
    </children>
 </AnchorPane>

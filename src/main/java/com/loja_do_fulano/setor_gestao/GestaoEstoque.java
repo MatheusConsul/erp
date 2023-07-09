@@ -1,7 +1,6 @@
-package com.loja_do_fulano.setor_estoque;
+package com.loja_do_fulano.setor_gestao;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,18 +10,18 @@ import com.loja_do_fulano.setor_caixa.Pedido;
 import com.loja_do_fulano.setor_vendas.Item;
 import com.loja_do_fulano.setor_vendas.ItemSerializable;
 
-public class Entrega {
+public class GestaoEstoque {
 
-     private static List<Pedido> pedidosAprovados = new ArrayList<>();
+    private static List<Pedido> todosPedidos = new ArrayList<>();
 
      public static List<Pedido> getListaPedidos(){
 
-        pedidosAprovados = ApiBD.pesquisarPedidosPorStatus("Aprovado");
+        todosPedidos = ApiBD.pesquisarPedidosPorStatus("todos");
 
-        if(pedidosAprovados == null){
+        if(todosPedidos == null){
             System.out.println("Erro ao buscar pedidos Realizados!!!!!");
         }
-        return pedidosAprovados;
+        return todosPedidos;
     }
 
     public static List<Item> getListaItens(Pedido pedido){

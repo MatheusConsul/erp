@@ -22,6 +22,8 @@ import com.loja_do_fulano.banco_dados.ApiBD;
 import com.loja_do_fulano.main.App;
 import com.loja_do_fulano.setor_estoque.Produto;
 
+import javafx.stage.Stage;
+
 public class Carrinho {
 
     private static List<Item> carrinhoDeCompras = new ArrayList<>();
@@ -170,7 +172,7 @@ public class Carrinho {
         
     }
     
-    public static void finalizarCompra(PessoaFisica cliente){
+    public static void finalizarCompra(PessoaFisica cliente, Stage stage) throws IOException{
 
         
         if(serealizarItens().equals(null)){
@@ -185,7 +187,8 @@ public class Carrinho {
 
             if(pedidoSalvo){
                 System.out.println("Pedido de venda salvo com sucesso!!!");
-                // limpar carrinho e voltar tela de login 
+                carrinhoDeCompras.clear();
+                App.telaLogin(stage);
             }else{
                 System.out.println("Erro ao salvar pedido de venda!!!");
             }

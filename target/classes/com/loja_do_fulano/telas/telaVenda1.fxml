@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane accessibleRole="COMBO_BOX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="967.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loja_do_fulano.telas_controller.TelaVenda1Controller">
+   <children>
+      <Button fx:id="btnPesquisar" layoutX="456.0" layoutY="26.0" mnemonicParsing="false" onAction="#pesquisarProduto" text="Pesquisar" />
+      <TextField fx:id="txtCampoPesquisa" layoutX="14.0" layoutY="26.0" onKeyPressed="#acaoPesquisarEnter" prefHeight="26.0" prefWidth="430.0" />
+      <Button fx:id="btnSair" layoutX="884.0" layoutY="10.0" mnemonicParsing="false" onAction="#acaoSair" prefHeight="32.0" prefWidth="58.0" text="Sair" />
+      <Button layoutX="14.0" layoutY="544.0" mnemonicParsing="false" text="Status Vendas" />
+      <Label fx:id="lblUsuarioLogado" layoutX="14.0" layoutY="642.0" text="Usuario">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tbProdutos" layoutX="14.0" layoutY="79.0" prefHeight="451.0" prefWidth="510.0">
+        <columns>
+          <TableColumn fx:id="tbColunaCodigo" prefWidth="70.39999103546143" text="Codigo" />
+          <TableColumn fx:id="tbColunaDescricao" prefWidth="276.800048828125" text="Descrição" />
+            <TableColumn fx:id="tbColunaQuantidade" prefWidth="75.2000732421875" text="Estoque" />
+            <TableColumn fx:id="tbColunaPreco" prefWidth="81.60003662109375" text="Preço" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tbCarrinho" layoutX="542.0" layoutY="80.0" prefHeight="451.0" prefWidth="410.0">
+         <columns>
+            <TableColumn fx:id="tbColunaDescricaoCarrinho" prefWidth="264.00006103515625" text="Descrição" />
+            <TableColumn fx:id="tbColunaQuantidadeCarrinho" prefWidth="73.5999755859375" text="Quantidade" />
+            <TableColumn fx:id="tbColunaPrecoCarrinho" prefWidth="64.7999267578125" text="Preço" />
+         </columns>
+      </TableView>
+      <Label layoutX="652.0" layoutY="51.0" text="Carrinho de compras:">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnAdicionarCarrinho" layoutX="392.0" layoutY="544.0" mnemonicParsing="false" onAction="#acaoAdicionarCarrinho" text="Adicionar ao Carrinho" />
+      <Button fx:id="btnExcluirItem" layoutX="542.0" layoutY="544.0" mnemonicParsing="false" onAction="#acaoExcluirItem" text="Excluir Item" textFill="RED" />
+      <Button fx:id="btnAlterarQuant" layoutX="633.0" layoutY="544.0" mnemonicParsing="false" onAction="#acaoAlterarQuant" text="Alterar quantidade" />
+      <Button fx:id="btnContinuarVenda" layoutX="787.0" layoutY="621.0" mnemonicParsing="false" onAction="#acaoContinuarVenda" prefHeight="41.0" prefWidth="172.0" text="Continuar venda">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Label layoutX="779.0" layoutY="547.0" text="Valor Total:  R$">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblValorTotal" layoutX="885.0" layoutY="547.0" text="0,00">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

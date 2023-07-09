@@ -4,10 +4,9 @@ import java.io.IOException;
 
 import com.loja_do_fulano.banco_dados.ApiBD;
 import com.loja_do_fulano.main.App;
-import com.loja_do_fulano.setor_caixa.Caixa;
 import com.loja_do_fulano.setor_caixa.Pedido;
 import com.loja_do_fulano.setor_estoque.Entrega;
-import com.loja_do_fulano.setor_estoque.Produto;
+import com.loja_do_fulano.setor_gestao.GestaoEstoque;
 import com.loja_do_fulano.setor_vendas.Item;
 
 import javafx.collections.FXCollections;
@@ -22,13 +21,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class TelaEntregaController {
+public class TelaAcompanharVendasController {
 
-    @FXML
+@FXML
     private Button btnAtualizarLista;
-
-    @FXML
-    private Button btnRealizarEntrega;
 
     @FXML
     private Button btnSair;
@@ -58,13 +54,10 @@ public class TelaEntregaController {
     private TableColumn<Pedido, String> colunaStatusPedido;
 
     @FXML
-    private AnchorPane lblAviso;
-
-    @FXML
     private Label lblUsuarioLogado;
 
     @FXML
-    private TableView<Pedido> tbPedidosAprovados;
+    private TableView<Pedido> tbTodosPedidos;
 
     @FXML
     private TableView<Item> tbProdutosEntrega;
@@ -77,7 +70,7 @@ public class TelaEntregaController {
     void acaoSelecionarItem(MouseEvent event){
         
         if (event.getClickCount() == 1) {
-            Pedido pedidoSelecionado = tbPedidosAprovados.getSelectionModel().getSelectedItem();
+            Pedido pedidoSelecionado = tbTodosPedidos.getSelectionModel().getSelectedItem();
             if (pedidoSelecionado != null) {
                 atualizarListaItens(pedidoSelecionado);
             }else{
@@ -92,22 +85,6 @@ public class TelaEntregaController {
     }
 
     @FXML
-    void acaoRealizarEntrega(ActionEvent event) {
-
-        Pedido pedidoSelecionado = tbPedidosAprovados.getSelectionModel().getSelectedItem();
-
-        if (pedidoSelecionado != null) {
-            boolean alterado = ApiBD.alterarStatusPedido("Entregue", pedidoSelecionado.getNumPedido());
-            atualizarListaPedidos();
-
-        }else{
-                System.out.println("Nenhum pedido foi selecionado");
-            }
-        
-
-    }
-
-    @FXML
     void acaoSair(ActionEvent event) throws IOException {
         Stage stage = (Stage) btnAtualizarLista.getScene().getWindow();
         App.telaLogin(stage);
@@ -116,7 +93,7 @@ public class TelaEntregaController {
     @FXML
     void acaoVoltar(ActionEvent event) throws IOException {
         TelaEstoqueController.setUsuarioLogado(usuarioLogado); 
-        App.setRoot("telaEstoque");
+        App.setRoot("telaGerente");
     }
 
 
@@ -150,19 +127,22 @@ public class TelaEntregaController {
 
     private void atualizarListaPedidos(){
 
-        observableListPedidos = FXCollections.observableArrayList(Entrega.getListaPedidos());
+        observableListPedidos = FXCollections.observableArrayList(GestaoEstoque.getListaPedidos());
 
-        tbPedidosAprovados.setItems(observableListPedidos);
+        tbTodosPedidos.setItems(observableListPedidos);
 
     }
 
     private void atualizarListaItens(Pedido pedido){
 
-        observableListItens = FXCollections.observableArrayList(Entrega.getListaItens(pedido));
+        observableListItens = FXCollections.observableArrayList(GestaoEstoque.getListaItens(pedido));
 
         tbProdutosEntrega.setItems(observableListItens);
 
     }
+
+
+
 
     
 }

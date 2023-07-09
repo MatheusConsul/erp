@@ -17,18 +17,17 @@ public class TelaGerenteController {
     private Button btnEstoque;
 
     @FXML
-    void abrirTelaEstoque(ActionEvent event) {
-
-    }
-
-    @FXML
-    void acaoAcompanharVenda(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void abrirTelaEstoque() throws IOException {
+    void abrirTelaEstoque(ActionEvent event) throws IOException {
+        TelaEstoqueController.setUsuarioLogado("Gerente");
         App.setRoot("telaEstoque");
+    }
+
+    @FXML
+    void acaoAcompanharVenda(ActionEvent event) throws IOException {
+
+        TelaAcompanharVendasController.setUsuarioLogado("Gerente");
+        App.setRoot("telaAcompanharVendas");
+
     }
     
 }
