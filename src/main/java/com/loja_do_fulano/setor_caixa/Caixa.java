@@ -10,8 +10,6 @@ import com.loja_do_fulano.banco_dados.ApiBD;
 public class Caixa {
     
     private static List<Pedido> pedidosRealizados = new ArrayList<>();
-
-    
     
     public static void reprovarCompra(Pedido pedido){
          boolean alterado = ApiBD.alterarStatusPedido("Reprovado", pedido.getNumPedido());

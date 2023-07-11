@@ -15,12 +15,12 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TableView fx:id="tbTodosPedidos" layoutX="28.0" layoutY="139.0" onMouseClicked="#acaoSelecionarItem" prefHeight="383.0" prefWidth="518.0">
+      <TableView fx:id="tbTodosPedidos" layoutX="28.0" layoutY="139.0" onMouseClicked="#acaoSelecionarItem" prefHeight="383.0" prefWidth="517.0">
          <columns>
             <TableColumn fx:id="colunaPedido" prefWidth="67.99999618530273" text="N° Pedido:" />
             <TableColumn fx:id="colunaCPF" prefWidth="101.60000610351562" text="CPF:" />
-            <TableColumn fx:id="colunaNome" prefWidth="240.00001525878906" text="Nome:" />
-            <TableColumn fx:id="colunaStatusPedido" prefWidth="107.20001220703125" text="Status Pedido" />
+            <TableColumn fx:id="colunaNome" prefWidth="247.9999542236328" text="Nome:" />
+            <TableColumn fx:id="colunaStatusPedido" prefWidth="92.00006103515625" text="Status Pedido" />
          </columns>
       </TableView>
       <Label layoutX="199.0" layoutY="97.0" text="Todos os Pedidos:">

@@ -1,11 +1,8 @@
 package com.loja_do_fulano.telas_controller;
 
 import java.io.IOException;
-
-import com.loja_do_fulano.banco_dados.ApiBD;
 import com.loja_do_fulano.main.App;
 import com.loja_do_fulano.setor_caixa.Pedido;
-import com.loja_do_fulano.setor_estoque.Entrega;
 import com.loja_do_fulano.setor_gestao.GestaoEstoque;
 import com.loja_do_fulano.setor_vendas.Item;
 
@@ -18,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class TelaAcompanharVendasController {
