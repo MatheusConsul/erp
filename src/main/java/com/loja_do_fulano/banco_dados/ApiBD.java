@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.loja_do_fulano.setor_caixa.Pedido;
+import com.loja_do_fulano.setor_caixa.Pedido;   
 import com.loja_do_fulano.setor_estoque.Produto;
 import com.loja_do_fulano.setor_vendas.Endereco;
 import com.loja_do_fulano.setor_vendas.PessoaFisica;
